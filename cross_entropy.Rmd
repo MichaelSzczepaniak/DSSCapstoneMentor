@@ -1,0 +1,28 @@
+---
+title: "Assessing Accuracy of Classification Models"
+author: "Michael Szczepaniak"
+date: "April dd, 2017 (initial release)"
+output: html_document
+subtitle: Overall Error Rate vs. Cross-Entropy
+url: http://rpubs.com/mszczepaniak/classificationerrors
+---
+
+```{r setup, include=FALSE}
+# knitr::opts_chunk$set(echo = TRUE)
+# library(quanteda)
+# library(data.table)
+# library(readr)
+# library(stringr)
+# library(dplyr)
+```
+
+### Introduction
+If you haven't built many classification models, a great question that you might ask yourself is: "How do I determine how good my classifaction model is performing?"
+
+To keep things simple, the two primary choices that you might consider for evaluating the accuracy of you model are: 1) overall error rate or 2) cross-entropy. The first option is straightforward. You just count the number of correct predictions and divide by the total number of predictions.
+
+The **cross-entropy** (aka negative log likelihood) is a more robust measure of accuracy for many classification problems than an overall error rate. You can find plenty on this topic if you want to dig into the theory, but here my goal is to help you develop a good intuition for the concept which is easier to see with an example.
+
+Let's say that are building a language model which predict the next word in a given phrase.we have a set of bigrams which can only be completed with one of the following 4 words: run, shout, play, eat. You have a prediction model which assigns a probability to each of these words and then outputs the word with the highest probability. For a problem structured like this, we can consider each word to be a class. Say you have a set of 10 trigrams you plan to use to test your models:
+
+<code>like to run<br>love to eat<br>when I play<br>makes me shout<br>he will run<br>she will play<br>they will shout<br>Tom will eat<br>want to shout<br>they might play</code>
