@@ -1,9 +1,9 @@
 ---
 title: "Assessing Accuracy of Classification Models"
 author: "Michael Szczepaniak"
-date: "April 24, 2017 (initial release)"
+date: "May 4, 2017 (last revision)"
 output: html_document
-subtitle: Overall Error Rate vs. Cross-Entropy
+subtitle: Part I - Overall Error Rate vs. Cross-Entropy
 url: http://rpubs.com/mszczepaniak/classificationgoodness
 ---
 
@@ -27,7 +27,7 @@ Let's say that we are building a language model which is designed to predict the
 
 <code>like to run<br>love to eat<br>when I play<br>makes me shout<br>he will run<br>she will play<br>they will shout<br>Tom will eat<br>want to shout<br>they might play</code>
 
-Let's say you have two models MODEL 1 and MODEL 2 and you want to determine which one is better. The inputs to the models are the first two words (bigram prefix) and the outputs are probabilities that the last (tail) word correctly completes the trigram. The model makes its prediction from the highest probability that it computed for the 4 possible words (classes). Let's say you run both models with the bigram prefixes listed above and get the following results:
+Now let's say that you have two models MODEL 1 and MODEL 2 and you want to determine which one is better. The inputs to each models are the first two words (aka bigram prefix) of a trigram from the above list and the outputs are probabilities that the last (tail) word correctly completes the trigram. The model makes its prediction from the highest probability that it computed for the 4 possible words (classes). Let's say you run both models with the bigram prefixes listed above and get the following results:
 
 <img src=https://raw.githubusercontent.com/MichaelSzczepaniak/DSSCapstoneMentor/master/images/cross_entropy_spreadsheet1.jpg>
 
@@ -35,16 +35,16 @@ So which one is better? It's hard to say if we look just at the absolute error r
 
 <img src=https://raw.githubusercontent.com/MichaelSzczepaniak/DSSCapstoneMentor/master/images/cross_entropy_spreadsheet2.jpg>
 
-You can download the Excel version of this spreadsheet [here](https://www.dropbox.com/s/pefnlo5mm888ur1/cross_entropy.xls?dl=1) and the Libreoffice calc version [here](https://www.dropbox.com/s/rqfpov52fhdd5s1/cross_entropy.ods?dl=1).
+You can download the Libreoffice calc version of this spreadsheet [here](https://www.dropbox.com/s/rqfpov52fhdd5s1/cross_entropy.ods?dl=1) or the Excel version of this spreadsheet [here](https://www.dropbox.com/s/pefnlo5mm888ur1/cross_entropy.xls?dl=1).
 
 To make things easier to compare, all the colored cells are the probabilities each model assigned to the correct prediction. If the cell is green, this probability was the highest one computed and resulted in a correct prediction. If the cell is yellow, this probability was not the highest one computed and resulted in an incorrect prediction.
 If we look closely, we can see that MODEL1 tends to assign higher probabilities to green cells than MODEL2. We also see that MODEL1 assigns higher probabilities to the yellow cells than MODEL2. This implies that MODEL1 assigned higher probabilities to the correct predictions both when it was right (green cells) and when it was wrong (yellow cells). Knowing this, which model is doing a better job? Obviously MODEL1 because even though it's overall error rate is the same as MODEL2, MODEL1 assigns higher probabilities to the correct class regardless of whether it made a correct prediction or not.  
 
 So now we have an idea of how one model might be better than another even if it has the same overall error rate, but how can I account for this mathematically? The average cross-entropy is what will do the trick nicely in this case. The cross-entropy (aka the negative log likelihood of the data) is a cost function that captures the idea we described earlier.  
 
-Recall what a cost function is. The larger the value of a cost function, the worse your model is performing. So our new cost function should increase when a model assigns lower probability to correct predictions and should decrease when it assigns higher probabilities to correct predictions. Let's take a look a the formula for the average cross-entropy and see if this behaves the way we just described:
+Recall what a cost function is. The larger the value of a cost function, the worse your model is performing. So our new cost function should increase when a model assigns lower probability to correct predictions and should decrease when it assigns higher probabilities to correct predictions. Let's take a look at the formula for the average cross-entropy and see if this behaves the way we just described:
 
-$$C = -\frac{1}{N}\sum_{n=1}^N \sum_{k=1}^K t_{n, k} \ln{y_{n, k}}$$  
+1. $C = -\frac{1}{N}\sum_{n=1}^N \sum_{k=1}^K t_{n, k} \ln{y_{n, k}}$  
 
 The term $y_{n, k}$ is the output probability of class k for sample n. The term $t_{n, k}$ is a binary-valued (can only be 0 or 1) indicator variable which is 1 when k is the correct class and 0 when k is any of the other incorrect classes. The cross-entropy and average cross-entropy are computed in the spreadsheets whose links are provided above.
 
