@@ -44,7 +44,7 @@ So now we have an idea of how one model might be better than another even if it 
 
 Recall what a cost function is. The larger the value of a cost function, the worse your model is performing. So our new cost function should increase when a model assigns lower probability to correct predictions and should decrease when it assigns higher probabilities to correct predictions. Let's take a look at the formula for the average cross-entropy and see if this behaves the way we just described:
 
-1. $C = -\frac{1}{N}\sum_{n=1}^N \sum_{k=1}^K t_{n, k} \ln{y_{n, k}}$  
+$$C = -\frac{1}{N}\sum_{n=1}^N \sum_{k=1}^K t_{n, k} \ln{y_{n, k}}$$
 
 The term $y_{n, k}$ is the output probability of class k for sample n. The term $t_{n, k}$ is a binary-valued (can only be 0 or 1) indicator variable which is 1 when k is the correct class and 0 when k is any of the other incorrect classes. The cross-entropy and average cross-entropy are computed in the spreadsheets whose links are provided above.
 
