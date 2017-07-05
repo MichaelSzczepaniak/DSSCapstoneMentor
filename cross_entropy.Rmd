@@ -52,4 +52,4 @@ If the model were perfect, we'd expect our model to assign a probability of 1 to
 
 If your model uses some kind of scoring (e.g. such as with a Stupid Back-Off language model) instead of probabilities like the Katz Back-Off, the same formula can still be applied if you normalize your scores so that they are like probabilities that fall between 0 and 1.
 
-Hopefully this little tutorial provides a good intuition into the value of using cross-entropy to evaluate the accuracy of classification models. As mentioned earlier, the term cross-entropy is also referred to as the negative log likelihood of the data. The derivation of the formula above is rather straight-forward if you put in the time to do a little research.
+Hopefully this little tutorial provides a good intuition into the value of using cross-entropy to evaluate the accuracy of classification models. As mentioned earlier, the term cross-entropy is also referred to as the negative log likelihood of the data. The derivation of the formula above is rather straight-forward, but we'll discuss this in more detail in **Part II**.
